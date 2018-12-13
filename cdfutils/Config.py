@@ -1,5 +1,5 @@
 #
-#   Module:     ConfigStore
+#   Module:     Config
 #   Platform:   Python 2.7
 #
 #   A generic configuration class that persists values in a file.
@@ -68,6 +68,3 @@ class ConfigStore(object):
         cp.write(f)
         f.close()
         
-
-    
-
