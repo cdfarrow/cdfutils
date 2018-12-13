@@ -1,5 +1,5 @@
 #
-#   Module:     DotNetForms
+#   Module:     DotNet
 #   Platform:   Python 2.7
 #
 #   Some general helper classes for use with .NET Windows.Forms:
