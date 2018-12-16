@@ -4,11 +4,11 @@ cdfutils
 A library of miscellaneous utility functions and classes
 that I've created for various projects. 
 
-ConfigStore:
+Config:
 
-    A generic configuration class that persists values in a text file.
+    ConfigStore: A generic configuration class that persists values in a text file.
     
-DotNetForms:
+DotNet:
 
     Some general helper classes for use with .NET Windows.Forms:
 

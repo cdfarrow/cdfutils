@@ -15,7 +15,7 @@ class ConfigStore(object):
     - A file name can be specified in the constructor, otherwise the
       default name "config.ini" is used.
     - Values are simply accessed as members of the class, e.g.:
-           Config = CDFConfigStore()
+           Config = ConfigStore()
            Config.username = "Fred"
            Config.email = "fred@rubble.com"
            DoSomething(Config.username, Config.email)
@@ -61,10 +61,9 @@ class ConfigStore(object):
         """
         cp = object.__getattribute__(self, "__cp")
         return cp.items(ConfigParser.DEFAULTSECT)
-    
+
     def __del__(self):
         f = open(object.__getattribute__(self, "__FNAME"), "w")
         cp = object.__getattribute__(self, "__cp")
         cp.write(f)
         f.close()
-        
