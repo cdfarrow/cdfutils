@@ -1,13 +1,18 @@
 #
 #   Module:     Config
-#   Platform:   Python 2.7
+#   Platform:   Python 2.7, 3.7
 #
 #   A generic configuration class that persists values in a file.
 #
-#   Copyright Craig Farrow, 2010 - 2018
+#   Copyright Craig Farrow, 2010 - 2019
 #
 
-import ConfigParser
+try:
+    import configparser                 # Python 3
+except ImportError:
+    import ConfigParser as configparser # Python 2
+
+# ------------------------------------------------------------------
 
 class ConfigStore(object):
     """
@@ -30,21 +35,21 @@ class ConfigStore(object):
     """
     def __init__(self, fileName="config.ini"):
         object.__setattr__(self, "__FNAME", fileName)
-        cp = ConfigParser.RawConfigParser()
+        cp = configparser.RawConfigParser()
         object.__setattr__(self, "__cp", cp)
         cp.read(object.__getattribute__(self, "__FNAME"))
 
     def __setattr__(self, key, value):
         cp = object.__getattribute__(self, "__cp")
-        cp.set(ConfigParser.DEFAULTSECT, key, repr(value))
+        cp.set(configparser.DEFAULTSECT, key, repr(value))
 
     def __getattr__(self, key):
         if key.startswith("__"):
             return object.__getattribute__(self, key)
         cp = object.__getattribute__(self, "__cp")
-        if not cp.has_option(ConfigParser.DEFAULTSECT, key):
-            cp.set(ConfigParser.DEFAULTSECT, key, None)
-        val = cp.get(ConfigParser.DEFAULTSECT, key)
+        if not cp.has_option(configparser.DEFAULTSECT, key):
+            cp.set(configparser.DEFAULTSECT, key, None)
+        val = cp.get(configparser.DEFAULTSECT, key)
         if val is None:
             return None
         else:
@@ -52,15 +57,15 @@ class ConfigStore(object):
 
     def __delattr__(self, key):
         cp = object.__getattribute__(self, "__cp")
-        if cp.has_option(ConfigParser.DEFAULTSECT, key):
-            cp.remove_option(ConfigParser.DEFAULTSECT, key)
+        if cp.has_option(configparser.DEFAULTSECT, key):
+            cp.remove_option(configparser.DEFAULTSECT, key)
 
     def items(self):
         """
         Get all the (item, value) pairs.
         """
         cp = object.__getattribute__(self, "__cp")
-        return cp.items(ConfigParser.DEFAULTSECT)
+        return cp.items(configparser.DEFAULTSECT)
 
     def __del__(self):
         f = open(object.__getattribute__(self, "__FNAME"), "w")
