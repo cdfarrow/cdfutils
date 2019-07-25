@@ -7,10 +7,7 @@
 #   Copyright Craig Farrow, 2010 - 2019
 #
 
-try:
-    import configparser                 # Python 3
-except ImportError:
-    import ConfigParser as configparser # Python 2
+import configparser
 
 # ------------------------------------------------------------------
 
@@ -35,7 +32,7 @@ class ConfigStore(object):
     """
     def __init__(self, fileName="config.ini"):
         object.__setattr__(self, "__FNAME", fileName)
-        cp = configparser.RawConfigParser()
+        cp = configparser.ConfigParser(interpolation=None)
         object.__setattr__(self, "__cp", cp)
         cp.read(object.__getattribute__(self, "__FNAME"))
 
