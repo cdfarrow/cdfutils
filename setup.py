@@ -18,5 +18,8 @@ setup(
     author_email='cdfkiwi@gmail.com',
     url='https://github.com/cdfarrow/cdfutils',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs'))
+    packages=find_packages(exclude=('tests', 'docs')),
+    install_requires=[
+        'configparser',
+    ],
 )
