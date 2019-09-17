@@ -31,6 +31,8 @@ class CustomMainMenu(MainMenu):
         Submenu List is a list of tuples:
             (Handler, Text, Shortcut, Tooltip)
             If the Handler is None, then the menu is disabled.
+            Shortcut can be None instead Shortcut.None (which
+            has to be 'getattr(Shortcut, "None")' in Python 3.)
             If the tuple is None, then a separator is inserted.
     """
     def __init__(self, menuList):
@@ -41,11 +43,13 @@ class CustomMainMenu(MainMenu):
             for submenu in submenuList:
                 newSubmenu = MenuItem()
                 if submenu:
-                    handler, newSubmenu.Text, newSubmenu.Shortcut, newSubmenu.Tooltip = submenu
+                    handler, newSubmenu.Text, shortcut, newSubmenu.Tooltip = submenu
                     if handler:
                         newSubmenu.Click += handler
                     else:
                         newSubmenu.Enabled = False
+                    if shortcut:
+                        newSubmenu.Shortcut = shortcut
                 else:
                     newSubmenu.Text = "-"       # Separator
                 newMenu.MenuItems.Add(newSubmenu)
