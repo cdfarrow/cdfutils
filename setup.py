@@ -11,7 +11,7 @@ with open('LICENSE.txt') as f:
 
 setup(
     name='cdfutils',
-    version='1.0.1',
+    version='1.0.2',
     description='General utility library of miscellaneous functions and classes',
     long_description=readme,
     author='Craig Farrow',
