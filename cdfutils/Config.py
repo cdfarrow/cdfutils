@@ -32,7 +32,8 @@ class ConfigStore(object):
     """
     def __init__(self, fileName="config.ini"):
         object.__setattr__(self, "__FNAME", fileName)
-        cp = configparser.ConfigParser(interpolation=None)
+        cp = configparser.ConfigParser(interpolation=None,
+                                       allow_no_value=True)
         object.__setattr__(self, "__cp", cp)
         cp.read(object.__getattribute__(self, "__FNAME"))
 
