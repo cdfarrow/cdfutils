@@ -14,7 +14,7 @@ import re
 
 LINECOMMENTS = "#;"
 
-def RandomLine(f):
+def randomLine(f):
     """
     Given a text file return a random line, ignoring blank lines
     and those starting with "#" or ";".
@@ -35,9 +35,9 @@ def RandomLine(f):
     return lines[i].strip("\n")
 
 
-def RandomSection(f):
+def randomSection(f):
     """
-    Given a text file divided into sections by lines starting with the '#' character,
+    Given a text file divided into sections by the '#' character,
     return a random section.
 
     f -- the handle for an open text file.
