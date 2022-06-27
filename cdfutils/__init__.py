@@ -1,7 +1,8 @@
 #----------------------------------------------------------------------------
 # Name:         __init__.py
-# Purpose:      The presence of this file turns this directory into a
-#               Python package.
+# Purpose:      cdfutils provides a Python library of various functions 
+#               and classes that I use in my projects.
 #
 #----------------------------------------------------------------------------
 
+version = "1.0.3"

@@ -5,7 +5,8 @@ import unittest
 from cdfutils import Textfile
 
 
-TEST_FILENAME = r"testQuotes.txt"
+TEST_FILENAME = os.path.join(os.path.dirname(__file__), 
+                             r"testQuotes.txt")
 
 class TestConfig(unittest.TestCase):
 
