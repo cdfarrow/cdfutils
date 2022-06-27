@@ -23,6 +23,7 @@ FOR %%C IN ("Init"
 
 :DoInit
     %PYTHON% -m pip install -r requirements.txt
+    %PYTHON% -m pip install -r requirements-dev.txt
     exit
     
 :DoRunTests
