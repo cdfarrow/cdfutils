@@ -15,7 +15,9 @@ Some general helper classes for use with .NET Windows.Forms:
 + CustomToolBar
 
 ## Textfile
+
 Utility functions for reading from text files:
 
-+ RandomLine: return a random line.
-+ RandomSection: return a random section (delimited by lines starting with #).
++ RandomLine: return a random line from a file.
++ RandomSection: return a random section (delimited by lines starting 
+    with #) from a file.

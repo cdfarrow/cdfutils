@@ -1,6 +1,6 @@
 #
 #   Module:     Config
-#   Platform:   Python 2.7, 3.7
+#   Platform:   Python 3
 #
 #   A generic configuration class that persists values in a file.
 #
@@ -14,6 +14,7 @@ import configparser
 class ConfigStore(object):
     """
     A generic configuration class that persists the values in a text file.
+    
     - A file name can be specified in the constructor, otherwise the
       default name "config.ini" is used.
     - Values are simply accessed as members of the class, e.g.:
@@ -25,6 +26,7 @@ class ConfigStore(object):
            >>> type(Config.notusedbefore)
            <type 'NoneType'>
     - Supports any native Python type.
+    
     Limitations:
     - Values can be modified by assignment operations only. E.g.:
             Config.int += 1             # Works

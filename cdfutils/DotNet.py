@@ -1,6 +1,6 @@
 #
 #   Module:     DotNet
-#   Platform:   Python 2.7
+#   Platform:   Python 3, Windows.NET
 #
 #   Some general helper classes for use with .NET Windows.Forms:
 #
@@ -31,7 +31,7 @@ class CustomMainMenu(MainMenu):
         Submenu List is a list of tuples:
             (Handler, Text, Shortcut, Tooltip)
             If the Handler is None, then the menu is disabled.
-            Shortcut can be None instead Shortcut.None (which
+            Shortcut can be None instead of Shortcut.None (which
             has to be 'getattr(Shortcut, "None")' in Python 3.)
             If the tuple is None, then a separator is inserted.
     """

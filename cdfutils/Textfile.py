@@ -1,6 +1,6 @@
 #
 #   Module:     Textfile
-#   Platform:   Python 2.7, 3.6
+#   Platform:   Python 3
 #
 #   Utility functions for working with text files.
 #
