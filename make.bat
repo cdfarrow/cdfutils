@@ -14,35 +14,37 @@ FOR %%C IN ("Init"
     
 :Usage
     echo Usage:
-    echo      make init
-    echo      make runtests
-    echo      make clean
-    echo      make build
-    echo      make publish
-    exit
+    echo      make init         - Install the libraries for building
+    echo      make runtests     - Run the unit tests
+    echo      make clean        - Clean out build files
+    echo      make build        - Build the project
+    echo      make publish      - Publish the project to PyPI
+    goto :End
 
 :DoInit
     %PYTHON% -m pip install -r requirements.txt
     %PYTHON% -m pip install -r requirements-dev.txt
-    exit
+    goto :End
     
 :DoRunTests
     %PYTHON% -m pytest
     exit
+    goto :End
 
 :DoClean
     rmdir /s /q ".\build"
     rmdir /s /q ".\dist"
-    exit
+    goto :End
     
 :DoBuild
-    @REM Build the wheel
-    %PYTHON% -m build -w
-    exit
+    @REM Build the wheel (without using a virtual env)
+    %PYTHON% -m build -w -n
+    goto :End
     
 :DoPublish
     echo Publishing wheel to PyPI
     %PYTHON% -m twine upload .\dist\cdfutils*
-    exit
+    goto :End
 
 
+:End
