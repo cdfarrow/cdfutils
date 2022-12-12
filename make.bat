@@ -37,8 +37,8 @@ FOR %%C IN ("Init"
     goto :End
     
 :DoBuild
-    @REM Build the wheel (without using a virtual env)
-    %PYTHON% -m build -w -n
+    @REM Build the wheel
+    %PYTHON% -m build -w 
     goto :End
     
 :DoPublish
