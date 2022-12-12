@@ -4,7 +4,7 @@
 #
 #   A generic configuration class that persists values in a file.
 #
-#   Copyright Craig Farrow, 2010 - 2019
+#   Copyright Craig Farrow, 2010 - 2022
 #
 
 import configparser
@@ -26,6 +26,9 @@ class ConfigStore(object):
            >>> type(Config.notusedbefore)
            <type 'NoneType'>
     - Supports any native Python type.
+    - Configuration names are case insensitive.
+    - Use the save() method to save the values, or delete all references
+      to the ConfigStore object.
     
     Limitations:
     - Values can be modified by assignment operations only. E.g.:
@@ -67,8 +70,14 @@ class ConfigStore(object):
         cp = object.__getattribute__(self, "__cp")
         return cp.items(configparser.DEFAULTSECT)
 
-    def __del__(self):
+    def save(self):
+        """
+        Save the configuration to disk.
+        """
         f = open(object.__getattribute__(self, "__FNAME"), "w")
         cp = object.__getattribute__(self, "__cp")
         cp.write(f)
         f.close()
+
+    def __del__(self):
+        self.save()
