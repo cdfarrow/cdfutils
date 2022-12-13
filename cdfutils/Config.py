@@ -27,8 +27,7 @@ class ConfigStore(object):
            <type 'NoneType'>
     - Supports any native Python type.
     - Configuration names are case insensitive.
-    - Use the save() method to save the values, or delete all references
-      to the ConfigStore object.
+    - Use the save() method to save the values.
     
     Limitations:
     - Values can be modified by assignment operations only. E.g.:
@@ -78,6 +77,3 @@ class ConfigStore(object):
         cp = object.__getattribute__(self, "__cp")
         cp.write(f)
         f.close()
-
-    def __del__(self):
-        self.save()
