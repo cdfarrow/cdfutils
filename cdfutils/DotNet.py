@@ -34,6 +34,8 @@ class CustomMainMenu(MainMenu):
             Shortcut can be None instead of Shortcut.None (which
             has to be 'getattr(Shortcut, "None")' in Python 3.)
             If the tuple is None, then a separator is inserted.
+        Handlers are standard .NET Event Handlers, which take two 
+        parameters: the sender object, and System.EventArgs.
     """
     def __init__(self, menuList):
         MainMenu.__init__(self)

@@ -28,6 +28,8 @@ class ConfigStore(object):
     - Supports any native Python type.
     - Configuration names are case insensitive.
     - Use the save() method to save the values.
+      (del is still supported for backwards compatability, but save()
+       is preferred.)
     
     Limitations:
     - Values can be modified by assignment operations only. E.g.:
@@ -73,7 +75,15 @@ class ConfigStore(object):
         """
         Save the configuration to disk.
         """
-        f = open(object.__getattribute__(self, "__FNAME"), "w")
+        try:
+            f = open(object.__getattribute__(self, "__FNAME"), "w")
+        except NameError:
+            # If we are in final shutdown (i.e. via __del__), then open 
+            # won't exist any more...
+            return
         cp = object.__getattribute__(self, "__cp")
         cp.write(f)
         f.close()
+
+    def __del__(self):
+        self.save()
