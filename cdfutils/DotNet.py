@@ -13,6 +13,9 @@
 #   Copyright Craig Farrow, 2010 - 2018
 #
 
+import clr
+clr.AddReference("System.Windows.Forms")
+
 from System.Windows.Forms import (
     MainMenu, MenuItem, Shortcut,
     ToolBar, ToolBarButton, ToolBarButtonStyle, ToolBarAppearance,
