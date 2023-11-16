@@ -1,23 +1,19 @@
 # cdfutils
 
-A library of miscellaneous utility functions and classes
-that I've created for various projects. 
+_A library of miscellaneous utility functions and classes that I've created for my projects._
 
 ## Config
 
 + ConfigStore: A generic configuration class that persists values in a text file.
-    
-## DotNet
 
-Some general helper classes for use with .NET Windows.Forms:
+## DotNet
+_Some general helper classes for use with .NET Windows.Forms_
 
 + CustomMainMenu: Builds a full MainMenu from a supplied configuration.
-+ CustomToolBar: Build a ToolBar from a supplied configuration.
++ CustomToolBar: Builds a ToolBar from a supplied configuration.
 
 ## Textfile
+_Utility functions for reading from text files_
 
-Utility functions for reading from text files:
-
-+ randomLine(): return a random line from a file.
-+ randomSection(): return a random section (delimited by lines starting 
-    with #) from a file.
++ randomLine(): Returns a random line from a file.
++ randomSection(): Returns a random section (delimited by lines starting with #) from a file.
