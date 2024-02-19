@@ -10,7 +10,7 @@
 #       CustomToolBar:
 #           A ToolBar created from a list of toolbar item parameters.
 #
-#   Copyright Craig Farrow, 2010 - 2018
+#   Copyright Craig Farrow, 2010 - 2024
 #
 
 import clr
@@ -20,7 +20,8 @@ from System.Windows.Forms import (
     MainMenu, MenuItem, Shortcut,
     ToolBar, ToolBarButton, ToolBarButtonStyle, ToolBarAppearance,
     ToolStrip, ToolStripContainer, ToolStripSeparator,
-    ImageList,
+    ImageList, 
+    ColorDepth,
     DockStyle
     )
 
@@ -79,6 +80,7 @@ class CustomToolBar(ToolBar):
 
         self.HandlerList = []
         self.ImageList = ImageList()
+        self.ImageList.ColorDepth = ColorDepth.Depth32Bit
 
         for bParams in buttonList:
             button = ToolBarButton()
