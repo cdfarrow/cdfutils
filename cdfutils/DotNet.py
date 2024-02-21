@@ -86,22 +86,22 @@ class CustomToolBar(ToolBar):
             button = ToolBarButton()
             if bParams:
                 handler, button.Text, imageName, button.ToolTipText = bParams
+                
                 self.ImageList.Images.Add(
                     Bitmap.FromFile(imageName.join(imagePathTuple)))
                 button.ImageIndex = self.ImageList.Images.Count-1
-                
                 self.HandlerList.append(handler)
-                button.Tag = len(self.HandlerList)-1 
             else:
                 button.Style = ToolBarButtonStyle.Separator
+                self.HandlerList.append(None)   # Place-holder in handler list
             self.Buttons.Add(button)
 
         self.ButtonClick += self.__OnButtonClick
 
     def __OnButtonClick(self, sender, event):
-        if event.Button.Tag is not None:               # zero is a valid value
-            if self.HandlerList[event.Button.Tag]:
-                self.HandlerList[event.Button.Tag]()   # The event handler
+        i = self.Buttons.IndexOf(event.Button)
+        if self.HandlerList[i]:
+            self.HandlerList[i]()               # Call the event handler
                 
     def UpdateButtonText(self, buttonIndex, newText):
         self.Buttons[buttonIndex].Text = newText
