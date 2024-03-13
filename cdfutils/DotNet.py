@@ -20,6 +20,7 @@ from System.Windows.Forms import (
     MainMenu, MenuItem, Shortcut,
     ToolBar, ToolBarButton, ToolBarButtonStyle, ToolBarAppearance,
     ToolStrip, ToolStripContainer, ToolStripSeparator,
+    ContextMenu,
     ImageList, 
     ColorDepth,
     DockStyle
@@ -66,11 +67,11 @@ class CustomToolBar(ToolBar):
     """
     Creates a .NET ToolBar from an initialised structure:
         buttonList = List of tuples: 
-            (Handler, Text, Image, Tooltip)
+            (Handler, Text, ImageName, Tooltip)
             If the Handler is None, then the button is disabled.
             An item of None produces a toolbar separator.
         imagePathTuple = (prefix, suffix) pair to generate a full
-            path for loading the images.
+            file path from the ImageName.
     """
 
     def __init__(self, buttonList, imagePathTuple):
@@ -86,22 +87,40 @@ class CustomToolBar(ToolBar):
             button = ToolBarButton()
             if bParams:
                 handler, button.Text, imageName, button.ToolTipText = bParams
+                
                 self.ImageList.Images.Add(
                     Bitmap.FromFile(imageName.join(imagePathTuple)))
                 button.ImageIndex = self.ImageList.Images.Count-1
-                
                 self.HandlerList.append(handler)
-                button.Tag = len(self.HandlerList)-1 
+                if not handler:
+                    button.Enabled = False
             else:
                 button.Style = ToolBarButtonStyle.Separator
+                self.HandlerList.append(None)   # Place-holder in handler list
             self.Buttons.Add(button)
 
         self.ButtonClick += self.__OnButtonClick
 
     def __OnButtonClick(self, sender, event):
-        if event.Button.Tag is not None:               # zero is a valid value
-            if self.HandlerList[event.Button.Tag]:
-                self.HandlerList[event.Button.Tag]()   # The event handler
+        i = self.Buttons.IndexOf(event.Button)
+        if self.HandlerList[i]:
+            self.HandlerList[i]()               # Call the event handler
                 
     def UpdateButtonText(self, buttonIndex, newText):
         self.Buttons[buttonIndex].Text = newText
+
+# ------------------------------------------------------------------
+class SimpleContextMenu(ContextMenu):
+    """
+    Creates a .NET ContextMenu from a list of tuples: 
+        (Handler, Text)
+    """
+
+    def __init__(self, contextMenuItems):
+        ContextMenu.__init__(self)
+
+        for handler, itemText in contextMenuItems:
+            item = MenuItem()
+            item.Text = itemText
+            item.Click += handler
+            self.MenuItems.Add(item)
