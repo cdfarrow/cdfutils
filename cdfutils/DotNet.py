@@ -10,6 +10,9 @@
 #       CustomToolBar:
 #           A ToolBar created from a list of toolbar item parameters.
 #
+#       SimpleContextMenu:
+#           A ContextMenu created from a list of handlers and item text.
+#
 #   Copyright Craig Farrow, 2010 - 2024
 #
 
