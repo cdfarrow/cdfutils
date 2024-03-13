@@ -11,6 +11,7 @@ _Some general helper classes for use with .NET Windows.Forms_
 
 + CustomMainMenu: Builds a full MainMenu from a supplied configuration.
 + CustomToolBar: Builds a ToolBar from a supplied configuration.
++ SimpleContextMenu: Builds a ContextMenu from a supplied configuration.
 
 ## Textfile
 _Utility functions for reading from text files_
