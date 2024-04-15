@@ -19,6 +19,8 @@
 import clr
 clr.AddReference("System.Windows.Forms")
 
+import os
+
 from System.Windows.Forms import (
     MainMenu, MenuItem, Shortcut,
     ToolBar, ToolBarButton, ToolBarButtonStyle, ToolBarAppearance,
@@ -90,9 +92,9 @@ class CustomToolBar(ToolBar):
             button = ToolBarButton()
             if bParams:
                 handler, button.Text, imageName, button.ToolTipText = bParams
-                
-                self.ImageList.Images.Add(
-                    Bitmap.FromFile(imageName.join(imagePathTuple)))
+                path, suffix = imagePathTuple
+                imagePathName = os.path.join(path, imageName+suffix)
+                self.ImageList.Images.Add(Bitmap.FromFile(imagePathName))
                 button.ImageIndex = self.ImageList.Images.Count-1
                 self.HandlerList.append(handler)
                 if not handler:
