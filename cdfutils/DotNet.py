@@ -4,8 +4,8 @@
 #
 #   Some general helper classes for use with .NET Windows.Forms:
 #
-#       CustomMainMenu: 
-#           A MainMenu created from a list of menu item parameters
+#       CustomMainMenu:
+#           A MenuStrip created from a list of menu item parameters
 #
 #       CustomToolBar:
 #           A ToolBar created from a list of toolbar item parameters.
@@ -21,8 +21,10 @@ clr.AddReference("System.Windows.Forms")
 
 import os
 
+from System import EventHandler
 from System.Windows.Forms import (
-    MainMenu, MenuItem, Shortcut,
+    MenuStrip, ToolStripMenuItem,
+    Keys,
     ToolBar, ToolBarButton, ToolBarButtonStyle, ToolBarAppearance,
     ToolStrip, ToolStripContainer, ToolStripSeparator,
     ContextMenu,
@@ -30,13 +32,12 @@ from System.Windows.Forms import (
     ColorDepth,
     DockStyle
     )
-
 from System.Drawing import (Bitmap, Image)
- 
+
 # ------------------------------------------------------------------
-class CustomMainMenu(MainMenu):
+class CustomMainMenu(MenuStrip):
     """
-    Creates a .NET MainMenu from an initialised structure:
+    Creates a .NET MenuStrip from an initialised structure:
         List of tuples: (Menu Title, Submenu List)
         Submenu List is a list of tuples:
             (Handler, Text, Shortcut, Tooltip)
@@ -48,24 +49,24 @@ class CustomMainMenu(MainMenu):
         parameters: the sender object, and System.EventArgs.
     """
     def __init__(self, menuList):
-        MainMenu.__init__(self)
+        MenuStrip.__init__(self)
+        self.ShowItemToolTips = True
         for menu in menuList:
-            newMenu = MenuItem()
+            newMenu = ToolStripMenuItem()
             newMenu.Text, submenuList = menu
             for submenu in submenuList:
-                newSubmenu = MenuItem()
                 if submenu:
-                    handler, newSubmenu.Text, shortcut, newSubmenu.Tooltip = submenu
-                    if handler:
-                        newSubmenu.Click += handler
-                    else:
+                    handler, text, shortcut, tooltip = submenu
+                    newSubmenu = ToolStripMenuItem(text, None, EventHandler(handler))
+                    if not handler:
                         newSubmenu.Enabled = False
                     if shortcut:
-                        newSubmenu.Shortcut = shortcut
+                        newSubmenu.ShortcutKeys = shortcut
+                    newSubmenu.ToolTipText = tooltip
                 else:
-                    newSubmenu.Text = "-"       # Separator
-                newMenu.MenuItems.Add(newSubmenu)
-            self.MenuItems.Add(newMenu)
+                    newSubmenu = ToolStripSeparator()
+                newMenu.DropDownItems.Add(newSubmenu)
+            self.Items.Add(newMenu)
 
 # ------------------------------------------------------------------
 class CustomToolBar(ToolBar):
