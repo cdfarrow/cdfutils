@@ -27,8 +27,8 @@ from System.Windows.Forms import (
     Keys,
     ToolBar, ToolBarButton, ToolBarButtonStyle, ToolBarAppearance,
     ToolStrip, ToolStripContainer, ToolStripSeparator,
-    ContextMenu,
-    ImageList, 
+    ContextMenuStrip,
+    ImageList,
     ColorDepth,
     DockStyle
     )
@@ -42,8 +42,7 @@ class CustomMainMenu(MenuStrip):
         Submenu List is a list of tuples:
             (Handler, Text, Shortcut, Tooltip)
             If the Handler is None, then the menu is disabled.
-            Shortcut can be None instead of Shortcut.None (which
-            has to be 'getattr(Shortcut, "None")' in Python 3.)
+            Shortcut can be None for no shortcut key.
             If the tuple is None, then a separator is inserted.
         Handlers are standard .NET Event Handlers, which take two 
         parameters: the sender object, and System.EventArgs.
@@ -116,17 +115,16 @@ class CustomToolBar(ToolBar):
         self.Buttons[buttonIndex].Text = newText
 
 # ------------------------------------------------------------------
-class SimpleContextMenu(ContextMenu):
+class SimpleContextMenu(ContextMenuStrip):
     """
     Creates a .NET ContextMenu from a list of tuples: 
         (Handler, Text)
     """
 
     def __init__(self, contextMenuItems):
-        ContextMenu.__init__(self)
+        ContextMenuStrip.__init__(self)
 
         for handler, itemText in contextMenuItems:
-            item = MenuItem()
-            item.Text = itemText
-            item.Click += handler
-            self.MenuItems.Add(item)
+            item = ToolStripMenuItem (itemText, None, EventHandler(handler))
+            self.Items.Add(item)
+
