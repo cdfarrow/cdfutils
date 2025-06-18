@@ -8,12 +8,12 @@
 #           A MenuStrip created from a list of menu item parameters
 #
 #       CustomToolBar:
-#           A ToolBar created from a list of toolbar item parameters.
+#           A ToolStrip created from a list of toolbar item parameters.
 #
 #       SimpleContextMenu:
 #           A ContextMenu created from a list of handlers and item text.
 #
-#   Copyright Craig Farrow, 2010 - 2024
+#   Copyright Craig Farrow, 2010 - 2025
 #
 
 import clr
@@ -24,17 +24,18 @@ import os
 from System import EventHandler
 from System.Windows.Forms import (
     MenuStrip, ToolStripMenuItem,
-    Keys,
-    ToolBar, ToolBarButton, ToolBarButtonStyle, ToolBarAppearance,
-    ToolStrip, ToolStripContainer, ToolStripSeparator,
     ContextMenuStrip,
+    ToolStrip, ToolStripButton, ToolStripSeparator,
+    ToolStripGripStyle,
+    TextImageRelation,
     ImageList,
     ColorDepth,
-    DockStyle
     )
-from System.Drawing import (Bitmap, Image)
+    
+from System.Drawing import (
+    Bitmap, Image
+    )
 
-# ------------------------------------------------------------------
 class CustomMainMenu(MenuStrip):
     """
     Creates a .NET MenuStrip from an initialised structure:
@@ -68,9 +69,9 @@ class CustomMainMenu(MenuStrip):
             self.Items.Add(newMenu)
 
 # ------------------------------------------------------------------
-class CustomToolBar(ToolBar):
+class CustomToolBar(ToolStrip):
     """
-    Creates a .NET ToolBar from an initialised structure:
+    Creates a .NET ToolStrip from an initialised structure:
         buttonList = List of tuples: 
             (Handler, Text, ImageName, Tooltip)
             If the Handler is None, then the button is disabled.
@@ -80,39 +81,31 @@ class CustomToolBar(ToolBar):
     """
 
     def __init__(self, buttonList, imagePathTuple):
-        ToolBar.__init__(self)
-        self.Appearance = ToolBarAppearance.Flat
-        self.Dock = DockStyle.Top
+        ToolStrip.__init__(self)
+        self.GripStyle = ToolStripGripStyle.Hidden
 
-        self.HandlerList = []
         self.ImageList = ImageList()
         self.ImageList.ColorDepth = ColorDepth.Depth32Bit
 
         for bParams in buttonList:
-            button = ToolBarButton()
             if bParams:
+                button = ToolStripButton()
+                button.TextImageRelation = TextImageRelation.ImageAboveText
                 handler, button.Text, imageName, button.ToolTipText = bParams
                 path, suffix = imagePathTuple
                 imagePathName = os.path.join(path, imageName+suffix)
                 self.ImageList.Images.Add(Bitmap.FromFile(imagePathName))
                 button.ImageIndex = self.ImageList.Images.Count-1
-                self.HandlerList.append(handler)
-                if not handler:
+                if handler:
+                    button.Click += handler
+                else:
                     button.Enabled = False
             else:
-                button.Style = ToolBarButtonStyle.Separator
-                self.HandlerList.append(None)   # Place-holder in handler list
-            self.Buttons.Add(button)
+                button = ToolStripSeparator()
+            self.Items.Add(button)
 
-        self.ButtonClick += self.__OnButtonClick
-
-    def __OnButtonClick(self, sender, event):
-        i = self.Buttons.IndexOf(event.Button)
-        if self.HandlerList[i]:
-            self.HandlerList[i]()               # Call the event handler
-                
     def UpdateButtonText(self, buttonIndex, newText):
-        self.Buttons[buttonIndex].Text = newText
+        self.Items[buttonIndex].Text = newText
 
 # ------------------------------------------------------------------
 class SimpleContextMenu(ContextMenuStrip):
