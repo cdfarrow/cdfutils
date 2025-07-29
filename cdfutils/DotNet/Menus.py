@@ -1,5 +1,5 @@
 #
-#   Module:     DotNet
+#   Module:     DotNet.Menus
 #   Platform:   Python 3, Windows.NET
 #
 #   Some general helper classes for use with .NET Windows.Forms:
@@ -13,7 +13,8 @@
 #       SimpleContextMenu:
 #           A ContextMenu created from a list of handlers and item text.
 #
-#   Copyright Craig Farrow, 2010 - 2025
+#   Copyright Craig Farrow, 
+#   2010 - 2025
 #
 
 import clr
@@ -36,6 +37,7 @@ from System.Drawing import (
     Bitmap, Image
     )
 
+# ------------------------------------------------------------------
 class CustomMainMenu(MenuStrip):
     """
     Creates a .NET MenuStrip from an initialised structure:
